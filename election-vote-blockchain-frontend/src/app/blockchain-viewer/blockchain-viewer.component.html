@@ -1,0 +1,27 @@
+<!-- src/app/blockchain-viewer/blockchain-viewer.component.html (Example) -->
+<div style="padding: 20px;">
+  <h2>Blockchain</h2>
+  <button (click)="mineTransactions()">Mine Pending Transactions</button>
+
+  <div *ngIf="pendingTransactions.length > 0">
+    <h3>Pending Transactions:</h3>
+    <ul>
+      <li *ngFor="let trans of pendingTransactions">
+        From: {{trans.fromAddress}} | To: {{trans.toAddress}} | Amount: {{trans.amount}}
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="blockchain.length > 0">
+    <h3>Chain:</h3>
+    <div *ngFor="let block of blockchain" style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
+      <p><strong>Index:</strong> {{ block.index }}</p>
+      <p><strong>Timestamp:</strong> {{ block.timestamp | date:'medium' }}</p>
+      <p><strong>Previous Hash:</strong> {{ block.previousHash }}</p>
+      <p><strong>Hash:</strong> {{ block.hash }}</p>
+      <p><strong>Nonce:</strong> {{ block.nonce }}</p>
+      <h4>Data:</h4>
+      <pre>{{ block.data | json }}</pre>
+    </div>
+  </div>
+</div>

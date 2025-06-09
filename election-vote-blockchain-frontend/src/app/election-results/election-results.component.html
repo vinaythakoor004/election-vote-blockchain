@@ -1,0 +1,38 @@
+<div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 20px auto; background-color: #f9f9f9;">
+  <h2>Election Results</h2>
+
+  <div style="margin-bottom: 20px;">
+    <p style="font-size: 1.1em;">Pending Votes to be Mined: <strong>{{ pendingTransactionsCount }}</strong></p>
+    <button (click)="mineVotes()" [disabled]="pendingTransactionsCount === 0"
+            style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;"
+            [style.opacity]="pendingTransactionsCount === 0 ? 0.6 : 1">
+      Mine Pending Votes (Process {{ pendingTransactionsCount }} votes)
+    </button>
+    <p style="font-size: 0.9em; color: #666; margin-top: 5px;">
+      (New votes are not counted until they are mined into a block.)
+    </p>
+  </div>
+
+  <h3>Current Vote Tally:</h3>
+  <div *ngIf="Object.keys(results).length === 0">
+    <p>No results available yet. Cast some votes and mine a block!</p>
+  </div>
+  <table *ngIf="Object.keys(results).length > 0" style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+    <thead>
+      <tr style="background-color: #eee;">
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Candidate</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Votes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let candidateId of Object.keys(results)">
+        <td style="padding: 10px; border: 1px solid #ddd;">{{ results[candidateId].name }}</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">{{ results[candidateId].votes }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="fetchResults()" style="background-color: #6c757d; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px;">
+    Refresh Results
+  </button>
+</div>

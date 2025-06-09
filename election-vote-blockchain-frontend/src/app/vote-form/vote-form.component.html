@@ -1,0 +1,45 @@
+<div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 500px; margin: 20px auto; background-color: #f9f9f9;">
+  <h2>Cast Your Vote</h2>
+
+  <div *ngIf="!currentElectionStatus" style="color: red; padding: 10px; border: 1px solid red; border-radius: 4px; margin-bottom: 15px;">
+    Election is currently CLOSED. Votes cannot be cast.
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="voterId" style="display: block; margin-bottom: 5px; font-weight: bold;">Voter ID:</label>
+    <input type="text" id="voterId" [(ngModel)]="voterId" (ngModelChange)="checkVoterStatus()" placeholder="Enter your unique ID"
+           style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+    <div *ngIf="voterId && !isVoterRegistered && !hasVotedAlready" style="color: orange; font-size: 0.9em; margin-top: 5px;">
+      Voter ID not registered. Please register with admin.
+    </div>
+    <div *ngIf="voterId && isVoterRegistered && hasVotedAlready" style="color: blue; font-size: 0.9em; margin-top: 5px;">
+      Voter ID registered. You have already voted!
+    </div>
+    <div *ngIf="voterId && isVoterRegistered && !hasVotedAlready" style="color: green; font-size: 0.9em; margin-top: 5px;">
+      Voter ID registered. You can vote!
+    </div>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="candidate" style="display: block; margin-bottom: 5px; font-weight: bold;">Select Candidate:</label>
+    <select id="candidate" [(ngModel)]="selectedCandidateId"
+            [disabled]="!currentElectionStatus || !isVoterRegistered || hasVotedAlready"
+            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+      <option value="" disabled>-- Choose a Candidate --</option>
+      <option *ngFor="let candidate of candidates" [value]="candidate.id">
+        {{ candidate.name }}
+      </option>
+    </select>
+  </div>
+
+  <button (click)="submitVote()"
+          [disabled]="!currentElectionStatus || !isVoterRegistered || hasVotedAlready || !selectedCandidateId"
+          style="background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;"
+          [style.opacity]="(!currentElectionStatus || !isVoterRegistered || hasVotedAlready || !selectedCandidateId) ? 0.6 : 1">
+    Submit Vote
+  </button>
+
+  <div *ngIf="message" [ngStyle]="{'color': isSuccess ? 'green' : 'red', 'margin-top': '15px', 'padding': '10px', 'border': '1px solid', 'border-radius': '4px'}">
+    {{ message }}
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<!-- src/app/app.component.html -->
+<div style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
+  <h1>Decentralized Election Voting App</h1>
+
+  <app-admin-dashboard></app-admin-dashboard>
+
+  <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+    <app-vote-form></app-vote-form>
+    <app-election-results></app-election-results>
+  </div>
+
+  <!-- You can still keep your blockchain viewer here if you wish -->
+  <!-- <app-blockchain-viewer></app-blockchain-viewer> -->
+</div><router-outlet />

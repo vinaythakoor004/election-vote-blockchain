@@ -1,0 +1,45 @@
+<div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 800px; margin: 20px auto; background-color: #f9f9f9;">
+  <h2>Admin Dashboard</h2>
+
+  <!-- Election Status Control -->
+  <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #fff;">
+    <h3>Election Status: <span [style.color]="currentElectionStatus ? 'green' : 'red'">{{ currentElectionStatus ? 'OPEN' : 'CLOSED' }}</span></h3>
+    <button (click)="toggleElectionStatus()"
+            style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+      {{ currentElectionStatus ? 'Close Election' : 'Open Election' }}
+    </button>
+    <span style="color: #666;">{{ electionStatusMessage }}</span>
+  </div>
+
+  <!-- Register Voter -->
+  <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #fff;">
+    <h3>Register New Voter</h3>
+    <input type="text" [(ngModel)]="newVoterId" placeholder="Enter Voter ID"
+           style="width: 70%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-right: 10px;">
+    <button (click)="registerVoter()"
+            style="background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+      Register
+    </button>
+    <span style="color: #666; margin-left: 10px;">{{ registerVoterMessage }}</span>
+  </div>
+
+  <!-- Registered & Voted Lists -->
+  <div style="display: flex; justify-content: space-around; gap: 20px;">
+    <div style="flex: 1; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #fff;">
+      <h3>Registered Voters ({{ registeredVoters.length }})</h3>
+      <ul style="list-style-type: none; padding: 0; max-height: 200px; overflow-y: auto; text-align: left;">
+        <li *ngFor="let voter of registeredVoters" style="border-bottom: 1px dashed #eee; padding: 5px 0;">{{ voter }}</li>
+      </ul>
+    </div>
+    <div style="flex: 1; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #fff;">
+      <h3>Voted Users ({{ votedUsers.length }})</h3>
+      <ul style="list-style-type: none; padding: 0; max-height: 200px; overflow-y: auto; text-align: left;">
+        <li *ngFor="let voter of votedUsers" style="border-bottom: 1px dashed #eee; padding: 5px 0;">{{ voter }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="margin-top: 20px; font-size: 0.9em; color: #888;">
+    Note: The 'Mine Pending Votes' button from the results viewer is no longer strictly necessary for voters as votes are automatically mined, but it can still be used by an admin to manually trigger if needed.
+  </p>
+</div>
